@@ -5,12 +5,13 @@
   <title>Giphy</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="/scripts/client.js"></script>
+  <link rel="stylesheet" href="/styles/styles.css">
 </head>
 <body ng-app="giphyApp">
   <main ng-controller="GiphyController as giphy">
     <h1>Giphy!</h1>
-    <input type ="text" placeholder="Search for a Giphy" ng-model="giphy.searchQuery"/>
-    <input type = "submit" ng-click= "giphy.searchForGiphy()"/>
+    <input type ="text" ng-model="giphy.searchQuery" placeholder="Search for a Giphy">
+    <input type = "submit" id="submit" ng-click= "giphy.searchForGiphy()">
     <p>
       <button ng-click ="giphy.addRandomGiphy()">Random Selection</button>
       <img ng-src = "{{giphy.imageUrl}}"/>
