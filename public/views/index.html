@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Giphy</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="/scripts/client.js"></script>
-  </head>
-  <body ng-app="giphyApp">
-      <main ng-controller="GiphyController as giphy">
-        <h1>Giphy!</h1>
+<head>
+  <meta charset="utf-8">
+  <title>Giphy</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <script src="/scripts/client.js"></script>
+</head>
+<body ng-app="giphyApp">
+  <main ng-controller="GiphyController as giphy">
+    <h1>Giphy!</h1>
+    <input type ="text" placeholder="Search for a Giphy" ng-model="giphy.searchQuery"/>
+    <input type = "submit" ng-click= "giphy.searchForGiphy()"/>
+    <p>
+      <button ng-click ="giphy.addRandomGiphy()">Random Selection</button>
+      <img ng-src = "{{giphy.imageUrl}}"/>
+    </p>
+    <ul>
+      <li ng-repeat="search in giphy.search"><img ng-src = "{{search.images.downsized.url}}"/></li>
+    </ul>
 
-        <p>
-          <button ng-click ="giphy.addRandomGiphy()">Random Selection</button>
-       <img ng-src = "{{giphy.imageUrl}}"/>
-        </p>
-      </main>
-    </body>
+  </main>
+</body>
 </html>
