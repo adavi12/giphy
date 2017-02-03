@@ -11,8 +11,9 @@
 <body ng-app="giphyApp">
   <main ng-controller="GiphyController as giphy">
     <h1>Giphy!</h1>
+    <!-- ng model is the search input field -->
     <input type ="text" ng-model="giphy.searchQuery" placeholder="Search for a Giphy">
-    <input type = "submit" id="submit" ng-click= "giphy.searchForGiphy()">
+    <input type = "submit" id="submit" ng-click= "giphy.searchForGiphy(giphy.searchQuery)">
     <p>
       <button ng-class="{ active: giphy.displayed }"ng-click ="giphy.addRandomGiphy()">Random Selection</button>
       <img ng-src = "{{giphy.imageUrl}}"/>

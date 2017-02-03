@@ -17,7 +17,7 @@ app.service('GiphyService', function ($http) {
       });
     };
   this.searchForGiphy = function(query){
-    $http ({
+     return $http ({
       method:'GET',
       url: API + '/gifs/search',
       params : {
