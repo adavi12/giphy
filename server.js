@@ -8,8 +8,7 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.use('/fav', fav);
-app.use('/', index);
-// app.use('/*', index);
+app.use('/*', index);
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {

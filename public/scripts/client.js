@@ -2,37 +2,49 @@ var app = angular.module('giphyApp',['ngRoute']);
 
 
 
-  app.config(function ($routeProvider, $locationProvider) {
-    $routeProvider.when('/', {
-      templateUrl:'views/pages/home.html',
-      controller:'GiphyController as giphy'
-    }).when('/favorites', {
-      templateUrl: 'views/pages/favorites.html',
-      controller: 'FavoritesController as favoritesCtrl'
+app.config(function ($routeProvider, $locationProvider) {
+  $routeProvider.when('/', {
+    templateUrl:'views/pages/home.html',
+    controller:'GiphyController as giphy'
+  }).when('/favorites', {
+    templateUrl: 'views/pages/favorites.html',
+    controller: 'FavoritesController as favoritesCtrl'
+  });
+
+  $locationProvider.html5Mode(true);
+});
+
+app.controller('FavoritesController', function (GiphyService) {
+  console.log('FavoritesController is loaded');
+  var favCtrl =this;
+  favCtrl.getGiphyResult = function(){
+    console.log('Got giphy back to display');
+
+    GiphyService.getFavoriteGiphy().then(function (response) {
+      console.log('working?');
+      favCtrl.giphyArray = response.data;
+      console.log(favCtrl.giphyArray.length);
     });
 
-      $locationProvider.html5Mode(true);
-    });
+  };
+  favCtrl.getGiphyResult();
+});
 
-    app.controller('FavoritesController', function () {
-      console.log('FavoritesController is loaded');
-    });
-
-    app.controller('GiphyController', function(GiphyService){
-      console.log('GiphyController loaded');
+app.controller('GiphyController', function(GiphyService){
+  console.log('GiphyController loaded');
 
   var ctrl = this;
-  ctrl.imageUrl = "";
+  // ctrl.imageUrl = "";
   ctrl.favGiphy = [];
   ctrl.favCount = 0;
-  ctrl.favComment = "";
-//
+  // ctrl.favComment = "";
+
+  //
   ctrl.addRandomGiphy= function(){
     // console.log('Good');
     GiphyService.addRandomGiphy().then(function(imageUrl){
       ctrl.imageUrl = imageUrl;
     });
-    // console.log("image:", ctrl.imageUrl);
   };
   ctrl.searchForGiphy = function(searchQuery){
     console.log('Got a search query from the input field of html file', searchQuery);
@@ -41,20 +53,14 @@ var app = angular.module('giphyApp',['ngRoute']);
       ctrl.imageUrl =  imageUrlArray;
     });
   };
-
-
-  ctrl.addFavoriteGiphy = function(){
-    console.log('Favorite');
-    console.log(ctrl.imageUrl);
-    console.log(ctrl.favComment);
-    GiphyService.addFavoriteGiphy().then(function(){
-    console.log('ok');
-    ctrl.favCount = ctrl.favGiphy.length;
-
-    // ctrl.imageUrl
-    //
-    // ctrl.favComment
-  });
+  ctrl.saveAsFavoriteGiphy = function(){
+    ctrl.gifObject = {
+      imageUrl :ctrl.imageUrl,
+      comment: ctrl.favComment
+    };
+    console.log(ctrl.gifObject);
+    GiphyService.saveAsFavoriteGiphy(ctrl.gifObject).then(function () {
+      console.log('saved object?');
+    });
   };
-  });
-// });
+});

@@ -3,11 +3,11 @@ var router = express.Router();
 
 var pg = require("pg");
 
-var config = { database: "gif-favorites" };
+var config = { database: "gif-favorite" };
 
 var pool = new pg.Pool(config);
 router.get("/", function(req, res) {
-
+console.log('router.get check');
   pool.connect(function(err, client, done) {
     if (err) {
       console.log("Error connecting to DB", err);
@@ -35,9 +35,10 @@ router.post("/", function(req, res) {
       res.sendStatus(500);
       done();
     } else {
+      console.log(req.body);
       client.query(
         "INSERT INTO gifs (gif_url, comment) VALUES ($1, $2) RETURNING *;",
-        [ req.body.gif_url, req.body.comment],
+        [ req.body.imageUrl, req.body.comment],
         function(err, result) {
           done();
           if (err) {

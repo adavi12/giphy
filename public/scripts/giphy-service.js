@@ -1,6 +1,8 @@
 app.service('GiphyService', function ($http) {
   var API = 'http://api.giphy.com/v1';
 
+
+
   this.addRandomGiphy = function(){
     return $http ({
       method:'GET',
@@ -32,14 +34,27 @@ app.service('GiphyService', function ($http) {
       console.log('Error getting info from API', err);
     });
   };
-
-  this.addFavoriteGiphy = function(favGiphy){
+  this.saveAsFavoriteGiphy = function(favGiphy){
+    console.log('favGiphy:', favGiphy);
     return $http({
       method: 'POST',
       url: '/fav',
-      data: 
+      data: favGiphy
     }).then(function(response){
-      console.log('Added favorite');
+      console.log('Added favorite', response);
+      return response;
+    }).catch(function(err){
+      console.log('Error getting info', err);
+    });
+  };
+  this.getFavoriteGiphy =function(){
+    return $http({
+      method: 'GET',
+      url: '/fav'
+    }).then(function(response){
+      console.log('Get response:', response);
+      return response;
+      
     }).catch(function(err){
       console.log('Error getting info', err);
     });
